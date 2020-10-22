@@ -1,5 +1,5 @@
 
-a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,.;:-_ò@çà#°ù§è[é+]*ì^\'=)(/&%$£""!\\|1234567890<>'
 toa = {k: i for i, k in enumerate(a)}
 
 
@@ -16,6 +16,6 @@ def decrypt(msg, key):
 
 
 if __name__ == "__main__":
-    MSG = 'abc'
+    MSG = 'abc :-)'
     KEY = 'keylong'
     assert MSG == decrypt(encrypt(MSG, KEY), KEY)
