@@ -16,7 +16,7 @@ def lcm(x, y):
     """
     return abs(x*y)/gcd(x, y)
 
-# TODO lookup for a better implementation, with some randomization
+# TODO check: smaller is better, right?
 def cir(rs, re, t):
     """
     Find a number n, coprime to t, in the range (rs, re)
