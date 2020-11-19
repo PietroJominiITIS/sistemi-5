@@ -14,7 +14,7 @@ def lcm(x, y):
     """
     Compute the least common multiple of x and y
     """
-    return abs(x*y)/gcd(x, y)
+    return abs(x*y)//gcd(x, y)
 
 # TODO check: smaller is better, right?
 def cir(rs, re, t):
