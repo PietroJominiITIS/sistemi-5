@@ -1,11 +1,11 @@
 """
 TODO:
 - generate primes (miller-rabin)
+- crt
 """
 
 from utils import lcm, cir, mpow
 from packed import pack, unpack, computed_size
-from sys import argv
 
 def keygen(p, q):
     """
@@ -43,29 +43,14 @@ def decrypt(x, key):
     n, d = key
     return mpow(x, d, n)
 
-def encrypt_packed(l, key):
+def encrypt_packed(l, key, size=None):
     n, _ = key
-    size = computed_size(n)
+    size = size if size else computed_size(n)
     data = pack(l, size)
     return (encrypt(c, key) for c in data)
 
-def decrypt_packed(l, key):
+def decrypt_packed(l, key, size=None):
     n, _ = key
-    size = computed_size(n)
+    size = size if size else computed_size(n)
     data = (decrypt(c, key) for c in l)
     return unpack(data, size)
-
-if __name__ == "__main__":
-    msgd = 'big nose :==), unicode certified こんにちは'
-    msg = ' '.join(argv[1:]) if len(argv) > 1 else msgd
-
-    print('Generating keys ...')
-    priv, pub = keygen(20089, 20101)
-
-    print('Encrypting...')
-    encrypted = encrypt_packed(bytearray(msg.encode()), pub)
-
-    print('Decrypting...')
-    decrypted = decrypt_packed(encrypted, priv).decode()
-
-    print(decrypted)

@@ -13,18 +13,6 @@ resulting byte array using bitwise shifts.
 The unpacking procedure is similar.
 """
 
-"""
-unix `time` benchmarks, with p = 10069 & q = 11587
-1 -> 37s
-2 -> 19s
-3 -> 14s
-4 -> 10s
-not very deterministic, but it's good to see that it helps somehow
-
-TODO separate cli keygen, encode, decode to seriously benchmark
-     or benchmark directly in code
-"""
-
 from functools import reduce
 
 def pack(l, size):
