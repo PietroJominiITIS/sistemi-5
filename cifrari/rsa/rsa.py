@@ -42,6 +42,12 @@ def decrypt(x, key):
     n, d = key
     return pow(x, d, n)
 
+def encrypt_array(l, key):
+    return map(lambda a: encrypt(a, key), l)
+
+def decrypt_array(l, key):
+    return map(lambda a: decrypt(a, key), l)
+
 def encrypt_packed(l, key, size=None):
     n, _ = key
     size = size if size else computed_size(n)
