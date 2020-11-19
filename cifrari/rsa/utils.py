@@ -18,9 +18,7 @@ def lcm(x, y):
 
 # TODO check: smaller is better, right?
 def cir(rs, re, t):
-    """
-    Find a number n, coprime to t, in the range (rs, re)
-    """
+    """Find a number n, coprime to t, in the range (rs, re)"""
     for n in range(rs, re):
         if gcd(n, t) == 1:
             return n
@@ -29,13 +27,22 @@ def cir(rs, re, t):
     return 0
 
 # https://en.wikipedia.org/wiki/Modular_exponentiation
+# i just noticed that python's pow accept a mod, lol
+# hence this is useless
 def mpow(b, e, m):
-    """
-    Exponentiation in modular arithmetic
-    """
+    """Exponentiation in modular arithmetic"""
     if m == 1:
         return 0
     c = 1
     for _ in range(e):
         c = (c*b) % m
     return c
+
+# TODO check, not really sure about this
+def mi(a, m):
+    """Modular inverse"""
+    a = a % m
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return 1

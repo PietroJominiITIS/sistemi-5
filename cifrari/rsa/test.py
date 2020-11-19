@@ -30,19 +30,20 @@ if __name__ == "__main__":
     msg = bytearray(msg.encode())
     size = None
 
-    print('Generating keys... ', end='')
+    print('Generating keys... ')
     strt = time()
     priv, pub = keygen(20089, 20101)
-    print(round(time() - strt, 3))
+    # priv, pub = keygen(15226050279225333605356183781326374297180681149613, 80688657908494580122963258952897654000350692006139)
+    print(f'\tin {round(time() - strt, 3)}s')
 
-    print('Encrypting... ', end='')
+    print('Encrypting... ')
     strt = time()
     encrypted = encrypt_packed(msg, pub, size)
-    print(round(time() - strt, 3))
+    print(f'\tin {round(time() - strt, 3)}s')
 
-    print('Decrypting... ', end='')
+    print('Decrypting... ')
     strt = time()
     decrypted = decrypt_packed(encrypted, priv, size)
-    print(round(time() - strt, 3))
+    print(f'\tin {round(time() - strt, 3)}s')
 
     print(decrypted.decode())

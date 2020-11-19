@@ -4,7 +4,7 @@ TODO:
 - crt
 """
 
-from utils import lcm, cir, mpow
+from utils import lcm, cir, mi
 from packed import pack, unpack, computed_size
 
 def keygen(p, q):
@@ -17,13 +17,12 @@ def keygen(p, q):
 
     # Step 2 
     m = lcm(p-1, q-1)
-    m = int(m)
 
     # Step 3 -> 1 < c < m | gcd(c, m) = 1
     c = cir(2, m, m)
 
     # Step 4 -> 0 <= d < m | (cd) % m = 1
-    d = [i for i in range(0, m) if (c * i) % m == 1][0]
+    d = mi(c, m)
 
     # private, public
     return (n, d), (n, c)
@@ -34,14 +33,14 @@ def encrypt(x, key):
     Encrypt a numeric sequence
     """
     n, c = key
-    return mpow(x, c, n)
+    return pow(x, c, n)
 
 def decrypt(x, key):
     """
     Decrypt a numeric sequence
     """
     n, d = key
-    return mpow(x, d, n)
+    return pow(x, d, n)
 
 def encrypt_packed(l, key, size=None):
     n, _ = key
