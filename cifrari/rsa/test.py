@@ -20,30 +20,53 @@ it definitely do with key generation,
 but it's good to see that chunking somehow helps
 """
 
-from rsa import keygen, encrypt_packed, decrypt_packed
+from rsa import keygen, encrypt_packed, decrypt_packed, encrypt_array, decrypt_array
 from time import time
 from sys import argv
 
-if __name__ == "__main__":
-    msgd = 'big nose :==), unicode certified こんにちは'
-    msg = ' '.join(argv[1:]) if len(argv) > 1 else msgd
-    msg = bytearray(msg.encode())
-    size = None
+def test_array(priv, pub):
+    target = [0, 1, 1, 2,  3,  5,  8, 13, 21, 34, 55, 89, 144]
 
-    print('Generating keys... ')
-    strt = time()
+    start = time()
+    print('\tEncryption...', end='')
+    encrypted = encrypt_array(target, pub)
+    print(f'\r\tEncrypted in {round(time() - start, 4)}')
+
+    start = time()
+    print('\tDecription...', end='')
+    decrypted = decrypt_array(encrypted, priv)    
+    print(f'\r\tDecripted in {round(time() - start, 4)}')
+
+    print('\tOK' if list(decrypted) == target else 'FAILED')
+
+def test_string(priv, pub):
+    target = 'big nose :==), unicode certified こんにちは'
+    btarget = bytearray(target.encode())
+
+    start = time()
+    print('\tEncryption...', end='')
+    encrypted = encrypt_packed(btarget, pub)
+    print(f'\r\tEncrypted in {round(time() - start, 4)}')
+
+    start = time()
+    print('\tDecription...', end='')
+    decrypted = decrypt_packed(encrypted, priv)    
+    print(f'\r\tDecripted in {round(time() - start, 4)}')
+
+    print('\tOK' if decrypted.decode() == target else 'FAILED')
+
+
+def test_all():
+    print('Generating keys')
+    start = time()
     priv, pub = keygen(20089, 20101)
-    # priv, pub = keygen(15226050279225333605356183781326374297180681149613, 80688657908494580122963258952897654000350692006139)
-    print(f'\tin {round(time() - strt, 3)}s')
+    print(f'\tin {round(time() - start, 3)}s')
 
-    print('Encrypting... ')
-    strt = time()
-    encrypted = encrypt_packed(msg, pub, size)
-    print(f'\tin {round(time() - strt, 3)}s')
+    print('Testing array')
+    test_array(priv, pub)
 
-    print('Decrypting... ')
-    strt = time()
-    decrypted = decrypt_packed(encrypted, priv, size)
-    print(f'\tin {round(time() - strt, 3)}s')
+    print('Testing string')
+    test_string(priv, pub)
 
-    print(decrypted.decode())
+if __name__ == "__main__":
+    test_all()
