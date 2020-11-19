@@ -56,7 +56,7 @@ def decrypt_packed(l, key):
     return unpack(data, size)
 
 if __name__ == "__main__":
-    msgd = 'big nose :==), unicode certified ©'
+    msgd = 'big nose :==), unicode certified こんにちは'
     msg = ' '.join(argv[1:]) if len(argv) > 1 else msgd
 
     print('Generating keys ...')
